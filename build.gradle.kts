@@ -2,18 +2,31 @@ plugins {
     id("java")
 }
 
-group = "me.xiaoying"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
+allprojects {
+    group = "me.xiaoying.turtleframe"
+    version = "1.0.0"
 }
 
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
+subprojects {
+    apply(plugin = "java")
 
-tasks.test {
-    useJUnitPlatform()
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+
+        // PlaceholderAPI
+        maven("https://repo.papermc.io/repository/maven-public/")
+        // spigot-api
+        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    }
+
+    dependencies {
+        // AfyBroker
+        compileOnly("net.afyer.afybroker:afybroker-core:2.5")
+    }
 }

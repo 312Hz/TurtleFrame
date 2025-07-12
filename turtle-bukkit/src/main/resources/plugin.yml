@@ -1,0 +1,5 @@
+name: TurtleFrame
+version: 1.0.0
+main: me.xiaoying.turtleframe.Turtle
+authors:
+  - 筱樱
