@@ -30,7 +30,7 @@ subprojects {
         compileOnly("net.afyer.afybroker:afybroker-core:2.5")
 
         // sqlfactory
-        compileOnly("me.xiaoying:sqlfactory:1.0.2")
+        compileOnly("me.xiaoying:sqlfactory:1.0.0")
 
         // lombok
         compileOnly ("org.projectlombok:lombok:1.18.30")
