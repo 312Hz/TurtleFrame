@@ -1,3 +1,6 @@
+chcp 65001
+cls
+
 @rem
 @rem Copyright 2015 the original author or authors.
 @rem
@@ -87,3 +90,5 @@ exit /b 1
 if "%OS%"=="Windows_NT" endlocal
 
 :omega
+echo ────────────
+echo Final: %time%
