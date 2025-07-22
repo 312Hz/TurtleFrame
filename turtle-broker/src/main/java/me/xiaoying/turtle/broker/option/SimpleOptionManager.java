@@ -14,6 +14,12 @@ public class SimpleOptionManager implements OptionManager {
         this.options = new HashMap<>();
     }
 
+    @Override
+    public Option getOption(String classification, String key) {
+        Map<String, Option> map = this.options.get(classification);
+        return map == null ? null : map.get(key);
+    }
+
     public void addOption(Option option) {
         Map<String, Option> options;
         if ((options = this.options.get(option.getClassification())) == null) {
@@ -23,13 +29,29 @@ public class SimpleOptionManager implements OptionManager {
 
         options.put(option.getKey(), option);
         this.options.put(option.getClassification(), options);
+
+        option.setNeedInsert(true);
     }
 
     public void removeOption(String classification, String key) {
+        Map<String, Option> options = this.options.get(classification);
 
+        if (options == null)
+            return;
+
+        Option option = options.get(key);
+        if (option == null)
+            return;
+
+        this.options.put(classification, options);
+        option.remove();
     }
 
     public void removeOption(Option option) {
         this.removeOption(option.getClassification(), option.getKey());
+    }
+
+    public void save() {
+
     }
 }

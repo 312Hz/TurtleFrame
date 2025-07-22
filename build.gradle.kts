@@ -26,8 +26,6 @@ subprojects {
     }
 
     dependencies {
-        // AfyBroker
-        compileOnly("net.afyer.afybroker:afybroker-core:2.5")
 
         // sqlfactory
         compileOnly("me.xiaoying:sqlfactory:1.0.0")

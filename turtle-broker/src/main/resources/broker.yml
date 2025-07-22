@@ -1,0 +1,5 @@
+name: TurtleFrame-Broker
+version: 1.0.0
+author: 筱樱
+main: me.xiaoying.turtle.broker.TBroker
+description: TurtleFrame Broker 插件
