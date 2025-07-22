@@ -24,12 +24,12 @@ public class Turtle extends JavaPlugin {
         Turtle.initialize();
 
         // 测试用代码
-        try {
-            OptionResponseMessage message = Broker.invokeSync(new OptionRequestMessage("test", "name"));
-            System.out.println(message.getOption().getValue() + " - " + message.getOption().getDescription());
-        } catch (RemotingException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            OptionResponseMessage message = Broker.invokeSync(new OptionRequestMessage("test", "name"));
+//            System.out.println(message.getOption().getValue() + " - " + message.getOption().getDescription());
+//        } catch (RemotingException | InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         ServerUtil.sendMessage("&a[√] &b初始化完成.");
     }
 

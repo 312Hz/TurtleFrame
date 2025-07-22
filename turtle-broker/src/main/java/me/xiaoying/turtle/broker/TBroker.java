@@ -43,7 +43,6 @@ public class TBroker extends Plugin {
 
         // options
         TBroker.optionManager = new SimpleOptionManager();
-        TBroker.optionManager.addOption(new Option("test", "name", "余豪冉", "杨启飞"));
 
         System.out.println("[√] 初始化完成.");
     }
