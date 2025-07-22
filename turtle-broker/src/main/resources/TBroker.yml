@@ -1,0 +1,32 @@
+#数据存储设置
+Database:
+  #存储方式(MYSQL/SQLITE/POSTGRESQL)
+  Type: "SQLITE"
+  #SQLite 设置
+  SQLite:
+    #文件位置
+    DataPath: "plugins/TurtleFrame-Broker/TBroker.db"
+  #Mysql 设置
+  Mysql:
+    #地址
+    Host: "localhost"
+    #端口
+    Port: 3306
+    #数据库
+    Database: "tbroker"
+    #账户
+    UserName: "root"
+    #密码
+    Password: "root"
+  #Postgresql 设置
+  Postgresql:
+    #地址
+    Host: "localhost"
+    #端口
+    Port: 3306
+    #数据库
+    Database: "tbroker"
+    #账户
+    UserName: "root"
+    #密码
+    Password: "root"

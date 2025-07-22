@@ -9,20 +9,24 @@ import me.xiaoying.sqlfactory.annotation.AutoConstructor;
 import me.xiaoying.sqlfactory.annotation.Column;
 import me.xiaoying.sqlfactory.annotation.Table;
 
+import java.io.Serializable;
+
 @Getter
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "option_info")
-public class Option {
-    @Column(length = 255)
+public class Option implements Serializable {
+    @Column(length = 255, unique = true)
     private final String classification;
-    @Column(length = 255)
+    @Column(length = 255, unique = true)
     private final String key;
     @Column(length = 255)
     private String value;
     @Column(length = 255)
     private String description;
 
+    @Setter
+    private boolean needInsert = false;
     private boolean modified = false;
 
     @AutoConstructor
@@ -48,7 +52,10 @@ public class Option {
     }
 
     public void save() {
+        if (this.needInsert) {
 
+            return;
+        }
     }
 
     public void remove() {
