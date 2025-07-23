@@ -43,6 +43,8 @@ public class SimpleOptionManager implements OptionManager {
         if (option == null)
             return;
 
+        options.remove(key);
+
         this.options.put(classification, options);
         option.remove();
     }
