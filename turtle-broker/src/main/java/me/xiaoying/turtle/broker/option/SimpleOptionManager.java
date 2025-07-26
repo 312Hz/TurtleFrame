@@ -29,16 +29,16 @@ public class SimpleOptionManager implements OptionManager {
         if (run.isEmpty()) {
             // 初始化数据
             List<Option> list = new ArrayList<>();
-            list.add(new Option("OverallSituation", "Variable.Prefix", "&a[&bTurtleFrame&a]&e>> ", "前缀(%prefix%)"));
-            list.add(new Option("OverallSituation", "Variable.DateFormat", "yyyy/MM/dd-HH:mm:ss", "日期格式(%date%)"));
+            list.add(new TOption("OverallSituation", "Variable.Prefix", "&a[&bTurtleFrame&a]&e>> ", "前缀(%prefix%)"));
+            list.add(new TOption("OverallSituation", "Variable.DateFormat", "yyyy/MM/dd-HH:mm:ss", "日期格式(%date%)"));
 
-            list.add(new Option("Command", "Main", "\n&c! [帮助信息]\n&c|- &b%command% &8-> &a%description%\n   &8├─ &6Alias: &e%command_aliases%\n   &8└─ &6Usage: \n%command_usage%\n&r\n", "主题模板"));
-            list.add(new Option("Command", "Usage.Parameter", "\\r\\r\\r\\r\\r\\r\\r\\r\\r\\r&8├─ &b/%command% &7%parameter% &8-> &a%description%", "当命令存在传递参数时显示的内容"));
-            list.add(new Option("Command", "Usage.MissingParameter", "\\r\\r\\r\\r\\r\\r\\r\\r\\r\\r&8├─ &b/%command% &8-> &a%description%", "当命令不存在传递参数时显示的内容"));
-            list.add(new Option("Command", "Parameter.Default", "< %parameter% >", "正常的命令传参提示"));
-            list.add(new Option("Command", "Parameter.Missing", "< %amount% 个参数>", "当命令没有配置对应的传递参数则应该显示内容"));
-            list.add(new Option("Command", "Parameter.Infinity", "< Infinity 个参数>", "当命令设置的传递参数需要无限个时显示内容"));
-            list.add(new Option("Command", "MissingDescription", "无描述", "当没有描述的时候应该显示什么"));
+            list.add(new TOption("Command", "Main", "\n&c! [帮助信息]\n&c|- &b%command% &8-> &a%description%\n   &8├─ &6Alias: &e%command_aliases%\n   &8└─ &6Usage: \n%command_usage%\n&r\n", "主题模板"));
+            list.add(new TOption("Command", "Usage.Parameter", "\\r\\r\\r\\r\\r\\r\\r\\r\\r\\r&8├─ &b/%command% &7%parameter% &8-> &a%description%", "当命令存在传递参数时显示的内容"));
+            list.add(new TOption("Command", "Usage.MissingParameter", "\\r\\r\\r\\r\\r\\r\\r\\r\\r\\r&8├─ &b/%command% &8-> &a%description%", "当命令不存在传递参数时显示的内容"));
+            list.add(new TOption("Command", "Parameter.Default", "< %parameter% >", "正常的命令传参提示"));
+            list.add(new TOption("Command", "Parameter.Missing", "< %amount% 个参数>", "当命令没有配置对应的传递参数则应该显示内容"));
+            list.add(new TOption("Command", "Parameter.Infinity", "< Infinity 个参数>", "当命令设置的传递参数需要无限个时显示内容"));
+            list.add(new TOption("Command", "MissingDescription", "无描述", "当没有描述的时候应该显示什么"));
             list.forEach(this::addOption);
             return;
         }
@@ -74,7 +74,7 @@ public class SimpleOptionManager implements OptionManager {
             return map.get(key);
 
         // 当缓存中不存在应该尝试从数据库中读取
-        List<Object> objects = TCore.getSqlFactory().run(new Select(new Option(classification, key)));
+        List<Object> objects = TCore.getSqlFactory().run(new Select(new TOption(classification, key)));
         if (objects.isEmpty())
             return null;
 
@@ -102,7 +102,7 @@ public class SimpleOptionManager implements OptionManager {
         options.put(option.getKey(), option);
         this.options.put(option.getClassification(), options);
 
-        option.setNeedInsert(true);
+        ((TOption) option).setNeedInsert(true);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class SimpleOptionManager implements OptionManager {
         options.remove(key);
 
         this.options.put(classification, options);
-        option.remove();
+        ((TOption) option).remove();
     }
 
     @Override
@@ -130,16 +130,17 @@ public class SimpleOptionManager implements OptionManager {
     @Override
     public void save() {
         this.options.values().forEach(map -> map.values().forEach(option -> {
-            if (option.modified()) {
+            TOption tOption = (TOption) option;
+
+            if (tOption.modified()) {
                 TCore.getSqlFactory().run(new Update(option));
                 return;
             }
 
-            if (!option.isNeedInsert())
+            if (!tOption.isNeedInsert())
                 return;
 
             Insert insert = new Insert(option);
-            System.out.println(insert);
             TCore.getSqlFactory().run(insert);
         }));
     }
