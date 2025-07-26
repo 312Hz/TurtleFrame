@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
-import me.xiaoying.sqlfactory.annotation.AutoConstructor;
 import me.xiaoying.sqlfactory.annotation.Column;
+import me.xiaoying.sqlfactory.annotation.Param;
 import me.xiaoying.sqlfactory.annotation.Table;
 
 import java.io.Serializable;
@@ -16,21 +16,29 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "option_info")
 public class Option implements Serializable {
-    @Column(length = 255, unique = true)
+    @Column(length = 255)
     private final String classification;
-    @Column(length = 255, unique = true)
+
+    @Column(length = 255)
     private final String key;
+
     @Column(length = 255)
     private String value;
+
     @Column(length = 255)
     private String description;
 
     @Setter
     private boolean needInsert = false;
+
     private boolean modified = false;
 
-    @AutoConstructor
-    public Option(String classification, String key, String value, String description) {
+    public Option(String classification, String key) {
+        this.classification = classification;
+        this.key = key;
+    }
+
+    public Option(@Param("classification") String classification, @Param("key") String key, @Param("value") String value, @Param("description") String description) {
         this.classification = classification;
         this.key = key;
         this.value = value;
