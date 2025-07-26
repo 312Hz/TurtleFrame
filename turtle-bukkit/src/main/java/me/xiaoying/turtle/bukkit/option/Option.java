@@ -24,9 +24,9 @@ public enum Option {
     COMMAND_PARAMETER_INFINITY("Command", "Parameter.Infinity"),
     COMMAND_MISSING_DESCRIPTION("Command", "MissingDescription");
 
-    private String classification;
+    private final String classification;
 
-    private String key;
+    private final String key;
 
     @Setter
     private String value;
