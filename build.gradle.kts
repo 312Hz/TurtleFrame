@@ -26,14 +26,13 @@ subprojects {
     }
 
     dependencies {
-
         // sqlfactory
-        compileOnly("me.xiaoying:sqlfactory:1.0.0")
+        implementation("me.xiaoying:sqlfactory:1.0.0")
 
         // lombok
-        compileOnly ("org.projectlombok:lombok:1.18.30")
-        annotationProcessor ("org.projectlombok:lombok:1.18.30")
-        testCompileOnly ("org.projectlombok:lombok:1.18.30")
-        testAnnotationProcessor ("org.projectlombok:lombok:1.18.30")
+        compileOnly("org.projectlombok:lombok:1.18.30")
+        annotationProcessor("org.projectlombok:lombok:1.18.30")
+        testCompileOnly("org.projectlombok:lombok:1.18.30")
+        testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
     }
 }

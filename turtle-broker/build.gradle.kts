@@ -6,6 +6,10 @@ plugins {
 dependencies {
     implementation(project(":turtle-api"))
 
+    // sqlfactory
+    // broker 服务端没有任何数据库驱动，需要手动导入
+    implementation("me.xiaoying:sqlfactory:1.0.0:all")
+
     // afybroker
     compileOnly("net.afyer.afybroker:afybroker-server:2.5")
     // yaml
