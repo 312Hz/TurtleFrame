@@ -1,7 +1,7 @@
 #数据存储设置
 Database:
   #存储方式(MYSQL/SQLITE/POSTGRESQL)
-  Type: "SQLITE"
+  Type: "Sqlite"
   #SQLite 设置
   Sqlite:
     #文件位置
