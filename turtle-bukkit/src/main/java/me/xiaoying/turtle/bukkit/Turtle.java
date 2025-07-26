@@ -2,6 +2,7 @@ package me.xiaoying.turtle.bukkit;
 
 import me.xiaoying.turtle.api.core.TCore;
 import me.xiaoying.turtle.api.utils.ServerUtil;
+import me.xiaoying.turtle.bukkit.option.Option;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Turtle extends JavaPlugin {
@@ -18,14 +19,6 @@ public class Turtle extends JavaPlugin {
 
         // initialize
         Turtle.initialize();
-
-        // 测试用代码
-//        try {
-//            OptionResponseMessage message = Broker.invokeSync(new OptionRequestMessage("test", "name"));
-//            System.out.println(message.getOption().getValue() + " - " + message.getOption().getDescription());
-//        } catch (RemotingException | InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
         ServerUtil.sendMessage("&a[√] &b初始化完成.");
     }
 
@@ -36,7 +29,9 @@ public class Turtle extends JavaPlugin {
     }
 
     public static void initialize() {
-
+        // 初始化 Option
+        ServerUtil.sendMessage("&6[*] &b尝试获取 &eOption &b信息.");
+        Option.initialize();
     }
 
     public static void unInitialize() {
