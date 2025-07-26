@@ -1,6 +1,6 @@
 name: TurtleFrame
 version: 1.0.0
-main: me.xiaoying.turtleframe.Turtle
+main: me.xiaoying.turtle.bukkit.Turtle
 depend:
   - AfyBroker
 authors:
