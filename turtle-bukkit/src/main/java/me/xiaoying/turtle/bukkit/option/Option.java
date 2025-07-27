@@ -65,8 +65,8 @@ public enum Option {
      */
     public static void initialize() {
         List<OptionClassificationRequestMessage> messages = new ArrayList<>();
-        messages.add(new OptionClassificationRequestMessage("OverallSituation"));
-        messages.add(new OptionClassificationRequestMessage("Command"));
+        // 自动添加请求配置信息
+        Values.options.keySet().forEach(classification -> messages.add(new OptionClassificationRequestMessage(classification)));
 
         messages.forEach(message -> {
             try {
