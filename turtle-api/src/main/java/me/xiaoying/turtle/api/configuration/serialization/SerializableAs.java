@@ -1,4 +1,4 @@
-package me.xiaoying.turtle.broker.configuration.serialization;
+package me.xiaoying.turtle.api.configuration.serialization;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
