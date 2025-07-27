@@ -1,7 +1,6 @@
-package me.xiaoying.turtle.bukkit.command;
+package me.xiaoying.turtle.api.command;
 
 import me.xiaoying.turtle.api.factory.VariableFactory;
-import me.xiaoying.turtle.bukkit.option.Option;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -108,7 +107,7 @@ public abstract class SCommand {
 
         Command command = this.getClass().getAnnotation(Command.class);
         if (command.description().isEmpty() && (this.description == null || this.description.isEmpty()))
-            return Option.COMMAND_MISSING_DESCRIPTION.getValue();
+            return "无描述";
 
         return this.description = command.description();
     }
@@ -156,7 +155,13 @@ public abstract class SCommand {
 
         List<String> values = this.getValues();
         // master
-        VariableFactory masterFactory = new VariableFactory(Option.COMMAND_MAIN.toString());
+        VariableFactory masterFactory = new VariableFactory("      \n" +
+                "&c! [帮助信息]\n" +
+                "&c|- &b%command% &8-> &a%description%\n" +
+                "   &8├─ &6Alias: &e%command_aliases%\n" +
+                "   &8└─ &6Usage: \n" +
+                "%command_usage%\n" +
+                "&r");
 
         String commandHead = this.getValues().get(0);
         SCommand parent = this.getParent();
@@ -180,7 +185,7 @@ public abstract class SCommand {
             List<String> parameters = this.getParameters();
             StringBuilder parameterBuilder = new StringBuilder();
 
-            VariableFactory usageFactory = parameters.isEmpty() || (parameters.size() == 1 && parameters.get(0).isEmpty()) ? new VariableFactory(Option.COMMAND_USAGE_MISSING_PARAMETER.toString()) : new VariableFactory(Option.COMMAND_USAGE_PARAMETER.toString());
+            VariableFactory usageFactory = parameters.isEmpty() || (parameters.size() == 1 && parameters.get(0).isEmpty()) ? new VariableFactory("          &8├─ &b/%command% &8-> &a%description%") : new VariableFactory("          &8├─ &b/%command% &7%parameter% &8-> &a%description%");
 
             // get the biggest length of this command
             int biggest = 0;
@@ -197,11 +202,11 @@ public abstract class SCommand {
             }
 
             if (biggest == -1) {
-                usageFactory = new VariableFactory(Option.COMMAND_USAGE_PARAMETER.toString());
-                parameterBuilder.append(Option.COMMAND_PARAMETER_INFINITY);
+                usageFactory = new VariableFactory("          &8├─ &b/%command% &7%parameter% &8-> &a%description%");
+                parameterBuilder.append("< Infinity 个参数>");
             } else {
                 for (int i = 0; i < biggest; i++) {
-                    parameterBuilder.append(new VariableFactory(Option.COMMAND_PARAMETER_DEFAULT.toString()).parameter(parameters.get(i)));
+                    parameterBuilder.append(new VariableFactory("< " + parameters.get(i) + " >"));
 
                     if (i >= parameters.size())
                         continue;
@@ -210,8 +215,8 @@ public abstract class SCommand {
                 }
             }
 
-            list.add(masterFactory.prefix(Option.OVERALL_SITUATION_VARIABLE_PREFIX.toString())
-                    .date(Option.OVERALL_SITUATION_VARIABLE_DATEFORMAT.toString())
+            list.add(masterFactory/*.prefix(MessageCommon.MASTER_PREFIX)
+                    .date(MessageCommon.MASTER_DATE_FORMAT)*/
                     .command_usage(usageFactory.command(commandHead).parameter(parameterBuilder.toString()).toString())
                     .description(this.getDescription())
                     .color()
@@ -243,11 +248,11 @@ public abstract class SCommand {
                 description = command.getSubCommand().getDescription();
             }
 
-            VariableFactory usageFactory = (parameters.isEmpty() && biggest != -1) || (parameters.size() == 1 && parameters.get(0).isEmpty()) ? new VariableFactory(Option.COMMAND_USAGE_MISSING_PARAMETER.toString()) : new VariableFactory(Option.COMMAND_USAGE_PARAMETER.toString());
+            VariableFactory usageFactory = (parameters.isEmpty() && biggest != -1) || (parameters.size() == 1 && parameters.get(0).isEmpty()) ? new VariableFactory("          &8├─ &b/%command% &8-> &a%description%") : new VariableFactory("          &8├─ &b/%command% &7%parameter% &8-> &a%description%");
 
             if (biggest == -1) {
-                usageFactory = new VariableFactory(Option.COMMAND_USAGE_PARAMETER.toString());
-                parameterBuilder.append(Option.COMMAND_PARAMETER_INFINITY);
+                usageFactory = new VariableFactory("          &8├─ &b/%command% &7%parameter% &8-> &a%description%");
+                parameterBuilder.append("< Infinity 个参数>");
                 usageList.add(usageFactory.command(commandHead + " " + s).parameter(parameterBuilder.toString()).description(description).toString());
                 continue;
             }
@@ -259,12 +264,12 @@ public abstract class SCommand {
                 String parameter = parameters.get(i);
 
                 if (!parameter.isEmpty())
-                    parameterBuilder.append(new VariableFactory(Option.COMMAND_PARAMETER_DEFAULT.toString()).parameter(parameter));
+                    parameterBuilder.append(new VariableFactory("< " + parameters.get(i) + " >").parameter(parameter));
 
                 if (i >= parameters.size() - 1) {
                     int result = Math.abs(biggest - parameters.size());
                     if (result != 0)
-                        parameterBuilder.append(" ").append(new VariableFactory(Option.COMMAND_PARAMETER_MISSING.toString()).amount(Math.abs(biggest - parameters.size())));
+                        parameterBuilder.append(" ").append(new VariableFactory("< %amount% 个参数>").amount(Math.abs(biggest - parameters.size())));
                     break;
                 }
 
@@ -274,8 +279,8 @@ public abstract class SCommand {
             usageList.add(usageFactory.command(commandHead + " " + s).parameter(parameterBuilder.toString()).description(description).toString());
         }
 
-        list.add(masterFactory.prefix(Option.OVERALL_SITUATION_VARIABLE_PREFIX.toString())
-                .date(Option.OVERALL_SITUATION_VARIABLE_DATEFORMAT.toString())
+        list.add(masterFactory/*.prefix(MessageCommon.MASTER_PREFIX)
+                .date(MessageCommon.MASTER_DATE_FORMAT)*/
                 .command_usage(usageList)
                 .description(this.getDescription())
                 .color()
