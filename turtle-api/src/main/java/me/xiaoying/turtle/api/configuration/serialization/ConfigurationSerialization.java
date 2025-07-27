@@ -1,6 +1,6 @@
 package me.xiaoying.turtle.api.configuration.serialization;
 
-import me.xiaoying.serverbuild.utils.Preconditions;
+import me.xiaoying.turtle.api.utils.Preconditions;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
