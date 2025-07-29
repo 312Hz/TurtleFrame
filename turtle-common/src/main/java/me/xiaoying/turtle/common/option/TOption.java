@@ -1,4 +1,4 @@
-package me.xiaoying.turtle.broker.option;
+package me.xiaoying.turtle.common.option;
 
 import lombok.AccessLevel;
 import lombok.Getter;

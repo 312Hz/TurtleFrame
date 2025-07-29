@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":turtle-api"))
+    implementation(project(":turtle-common"))
 
     // sqlfactory
     // broker 服务端没有任何数据库驱动，需要手动导入
