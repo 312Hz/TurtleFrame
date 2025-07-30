@@ -1,4 +1,4 @@
-package me.xiaoying.turtle.bukkit.command;
+package me.xiaoying.turtle.api.command;
 
 /**
  * Command RegisteredCommand

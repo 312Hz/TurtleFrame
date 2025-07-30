@@ -15,6 +15,7 @@ repositories {
 
 dependencies {
     implementation(project(":turtle-api"))
+    implementation(project(":turtle-common"))
 
     // AfyBroker
     compileOnly("net.afyer.afybroker:afybroker-core:2.5")

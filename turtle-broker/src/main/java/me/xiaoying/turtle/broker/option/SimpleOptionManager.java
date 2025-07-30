@@ -7,6 +7,7 @@ import me.xiaoying.sqlfactory.sentence.Update;
 import me.xiaoying.turtle.api.core.TCore;
 import me.xiaoying.turtle.api.option.Option;
 import me.xiaoying.turtle.api.option.OptionManager;
+import me.xiaoying.turtle.common.option.TOption;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +22,9 @@ public class SimpleOptionManager implements OptionManager {
         this.options = new HashMap<>();
 
         // 创建数据表
-        TCore.getSqlFactory().run(new Create(Option.class));
+        TCore.getSqlFactory().run(new Create(TOption.class));
         // 读取数据
-        List<Object> run = TCore.getSqlFactory().run(new Select(Option.class));
+        List<Object> run = TCore.getSqlFactory().run(new Select(TOption.class));
 
         // 当数据为空，则写入数据
         if (run.isEmpty()) {

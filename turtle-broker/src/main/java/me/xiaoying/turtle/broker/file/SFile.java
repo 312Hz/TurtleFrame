@@ -1,8 +1,7 @@
 package me.xiaoying.turtle.broker.file;
 
-import me.xiaoying.turtle.api.core.TCore;
+import me.xiaoying.turtle.api.configuration.YamlConfiguration;
 import me.xiaoying.turtle.broker.TBroker;
-import me.xiaoying.turtle.broker.configuration.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;

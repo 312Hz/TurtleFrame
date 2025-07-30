@@ -13,25 +13,35 @@ import me.xiaoying.turtle.broker.command.PluginsCommand;
 import me.xiaoying.turtle.broker.file.FileManager;
 import me.xiaoying.turtle.broker.file.SimpleFileManager;
 import me.xiaoying.turtle.broker.file.TBrokerFile;
+import me.xiaoying.turtle.broker.module.ModuleManager;
+import me.xiaoying.turtle.broker.module.consumable.Consumable;
 import me.xiaoying.turtle.broker.option.SimpleOptionManager;
 import me.xiaoying.turtle.broker.processor.OptionClassificationRequestProcessor;
 import me.xiaoying.turtle.broker.processor.OptionRequestProcessor;
 import net.afyer.afybroker.server.plugin.Plugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Locale;
 
 public class TBroker extends Plugin {
+    private static final Logger logger = LoggerFactory.getLogger("TBroker");;
+
     private static FileManager fileManager;
     private static OptionManager optionManager;
+
+    private static ModuleManager moduleManager;
+
     private static Plugin instance;
 
     @Override
     public void onLoad() {
-        System.out.println("[*] 正在初始化 " + this.getDescription().getName() + " .");
+        TBroker.logger.info("[*] 正在初始化 {} .", this.getDescription().getName());
+        System.out.println("正在初始化");
 
         // processors
-        System.out.println("[*] 注册 Processors .");
+        TBroker.logger.info("[*] 注册 Processors .");
         this.getServer().registerUserProcessor(new OptionRequestProcessor());
         this.getServer().registerUserProcessor(new OptionClassificationRequestProcessor());
     }
@@ -41,7 +51,7 @@ public class TBroker extends Plugin {
         TBroker.instance = this;
 
         // files
-        System.out.println("[*] 初始化配置文件.");
+        TBroker.logger.info("[*] 初始化配置文件.");
         TBroker.fileManager = new SimpleFileManager();
         TBroker.fileManager.register(new TBrokerFile());
         TBroker.fileManager.loads();
@@ -63,24 +73,47 @@ public class TBroker extends Plugin {
         TCore.setSqlFactory(sqlFactory);
 
         // commands
-        System.out.println("[*] 注册命令.");
+        TBroker.logger.info("[*] 注册命令.");
         this.getServer().getPluginManager().registerCommand(this, new PluginsCommand());
 
         // options
         TBroker.optionManager = new SimpleOptionManager();
 
-        System.out.println("[√] 初始化完成.");
+        // modules
+        TBroker.moduleManager = new ModuleManager();
+        TBroker.moduleManager.registerModule(new Consumable());
+        TBroker.moduleManager.getModules().forEach(module -> {
+            if (module.enabled())
+                return;
+
+            module.enable();
+            TBroker.logger.info("[*] 已加载 {}({})", module.getName(), module.getKey());
+        });
+
+        TBroker.logger.info("[√] 初始化完成.");
     }
 
     @Override
     public void onDisable() {
         TBroker.getOptionManager().save();
 
-        System.out.println("[#] " + this.getDescription().getName() + " 已卸载.");
+        TBroker.moduleManager.getModules().forEach(module -> {
+            if (!module.enabled())
+                return;
+
+            module.disable();
+            TBroker.logger.info("[*] 已卸载 {}({})", module.getName(), module.getKey());
+        });
+
+        TBroker.logger.info("[#] {} 已卸载.", this.getDescription().getName());
     }
 
     public static OptionManager getOptionManager() {
         return TBroker.optionManager;
+    }
+
+    public static ModuleManager getModuleManager() {
+        return TBroker.moduleManager;
     }
 
     public static Plugin getInstance() {
