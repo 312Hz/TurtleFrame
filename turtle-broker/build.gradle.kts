@@ -7,12 +7,17 @@ dependencies {
     implementation(project(":turtle-api"))
     implementation(project(":turtle-common"))
 
+    // logger
+    compileOnly("me.xiaoying:logger:1.0.1")
+
+    // broker
+    compileOnly("me.xiaoying.moebroker:broker-api:1.0.0")
+    implementation("me.xiaoying.moebroker:broker-server:1.0.0")
+    implementation("me.xiaoying.moebroker:broker-server-bootstrap-api:1.0.0")
+
     // sqlfactory
-    // broker 服务端没有任何数据库驱动，需要手动导入
     implementation("me.xiaoying:sqlfactory:1.0.0:all")
 
-    // afybroker
-    compileOnly("net.afyer.afybroker:afybroker-server:2.5")
     // yaml
     compileOnly("org.yaml:snakeyaml:2.2")
 }
@@ -27,7 +32,7 @@ tasks {
             "version" to project.version
         )
         inputs.properties(props)
-        filesMatching("broker.yml") {
+        filesMatching("plugin.yml") {
             expand(props)
         }
     }
@@ -41,6 +46,5 @@ tasks {
         archiveFileName.set("${rootProject.name}-broker-${project.version}.jar")
 
         exclude("README")
-        exclude("plugin.yml")
     }
 }

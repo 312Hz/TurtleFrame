@@ -1,5 +1,8 @@
 package me.xiaoying.turtle.broker;
 
+import me.xiaoying.moebroker.api.Broker;
+import me.xiaoying.moebroker.server.bootstrap.api.BCore;
+import me.xiaoying.moebroker.server.bootstrap.api.plugin.JavaPlugin;
 import me.xiaoying.sqlfactory.SqlFactory;
 import me.xiaoying.sqlfactory.config.MysqlConfig;
 import me.xiaoying.sqlfactory.config.PostgreSqlConfig;
@@ -18,32 +21,26 @@ import me.xiaoying.turtle.broker.module.consumable.Consumable;
 import me.xiaoying.turtle.broker.option.SimpleOptionManager;
 import me.xiaoying.turtle.broker.processor.OptionClassificationRequestProcessor;
 import me.xiaoying.turtle.broker.processor.OptionRequestProcessor;
-import net.afyer.afybroker.server.plugin.Plugin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Locale;
 
-public class TBroker extends Plugin {
-    private static final Logger logger = LoggerFactory.getLogger("TBroker");;
-
+public class TBroker extends JavaPlugin {
     private static FileManager fileManager;
     private static OptionManager optionManager;
 
     private static ModuleManager moduleManager;
 
-    private static Plugin instance;
+    private static TBroker instance;
 
     @Override
     public void onLoad() {
-        TBroker.logger.info("[*] 正在初始化 {} .", this.getDescription().getName());
-        System.out.println("正在初始化");
+        Broker.getLogger().info("&6[*] &f正在初始化 {} .", this.getDescription().getName());
 
         // processors
-        TBroker.logger.info("[*] 注册 Processors .");
-        this.getServer().registerUserProcessor(new OptionRequestProcessor());
-        this.getServer().registerUserProcessor(new OptionClassificationRequestProcessor());
+        Broker.getLogger().info("&6[*] &f注册 Processors .");
+        BCore.getServer().getProcessorManager().registerProcessor(new OptionRequestProcessor());
+        BCore.getServer().getProcessorManager().registerProcessor(new OptionClassificationRequestProcessor());
     }
 
     @Override
@@ -51,7 +48,7 @@ public class TBroker extends Plugin {
         TBroker.instance = this;
 
         // files
-        TBroker.logger.info("[*] 初始化配置文件.");
+        Broker.getLogger().info("&6[*] &f初始化配置文件.");
         TBroker.fileManager = new SimpleFileManager();
         TBroker.fileManager.register(new TBrokerFile());
         TBroker.fileManager.loads();
@@ -73,8 +70,8 @@ public class TBroker extends Plugin {
         TCore.setSqlFactory(sqlFactory);
 
         // commands
-        TBroker.logger.info("[*] 注册命令.");
-        this.getServer().getPluginManager().registerCommand(this, new PluginsCommand());
+        Broker.getLogger().info("&6[*] &f注册命令.");
+        BCore.getCommandManager().registerCommand(this, new PluginsCommand());
 
         // options
         TBroker.optionManager = new SimpleOptionManager();
@@ -87,10 +84,10 @@ public class TBroker extends Plugin {
                 return;
 
             module.enable();
-            TBroker.logger.info("[*] 已加载 {}({})", module.getName(), module.getKey());
+            Broker.getLogger().info("&6[*] &f已加载 &e{}&f(&7{}&f)", module.getName(), module.getKey());
         });
 
-        TBroker.logger.info("[√] 初始化完成.");
+        Broker.getLogger().info("&a[√] &f初始化完成.");
     }
 
     @Override
@@ -99,13 +96,14 @@ public class TBroker extends Plugin {
 
         TBroker.moduleManager.getModules().forEach(module -> {
             if (!module.enabled())
+
                 return;
 
             module.disable();
-            TBroker.logger.info("[*] 已卸载 {}({})", module.getName(), module.getKey());
+            Broker.getLogger().info("[*] 已卸载 {}({})", module.getName(), module.getKey());
         });
 
-        TBroker.logger.info("[#] {} 已卸载.", this.getDescription().getName());
+        Broker.getLogger().info("[#] {} 已卸载.", this.getDescription().getName());
     }
 
     public static OptionManager getOptionManager() {
@@ -116,7 +114,7 @@ public class TBroker extends Plugin {
         return TBroker.moduleManager;
     }
 
-    public static Plugin getInstance() {
+    public static JavaPlugin getInstance() {
         return TBroker.instance;
     }
 }

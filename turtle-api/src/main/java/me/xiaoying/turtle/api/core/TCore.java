@@ -1,6 +1,7 @@
 package me.xiaoying.turtle.api.core;
 
 import me.xiaoying.sqlfactory.SqlFactory;
+import me.xiaoying.turtle.api.module.ModuleManager;
 import me.xiaoying.turtle.api.pluginmanager.PluginManager;
 import org.bukkit.plugin.Plugin;
 
@@ -12,6 +13,8 @@ public class TCore {
     private static SqlFactory sqlFactory;
 
     private static PluginManager pluginManager;
+
+    private static ModuleManager moduleManager;
 
     public static Plugin getInstance() {
         return TCore.instance;
@@ -54,5 +57,16 @@ public class TCore {
             return;
 
         TCore.pluginManager = pluginManager;
+    }
+
+    public static void setModuleManager(ModuleManager moduleManager) {
+        if (TCore.moduleManager != null)
+            return;
+
+        TCore.moduleManager = moduleManager;
+    }
+
+    public static ModuleManager getModuleManager() {
+        return TCore.moduleManager;
     }
 }
