@@ -9,7 +9,6 @@ import me.xiaoying.moebroker.server.bootstrap.api.plugin.Plugin;
 import me.xiaoying.moebroker.server.bootstrap.api.plugin.PluginDescription;
 import me.xiaoying.moebroker.server.bootstrap.api.plugin.PluginManager;
 
-import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,14 +22,14 @@ public class PluginsCommand extends Command {
         try {
             PluginManager pluginManager = BCore.getPluginManager();
 
-            Broker.getLogger().info("[*] 插件总数量: " + pluginManager.getPlugins().length);
+            Broker.getLogger().info("&6[*] &a插件总数量: &e{}", pluginManager.getPlugins().length);
             for (Plugin plugin : pluginManager.getPlugins()) {
                 PluginDescription description = ((JavaPlugin) plugin).getDescription();
                 String des;
                 if ((des = description.getDescription()) == null)
                     des = "无";
-                Broker.getLogger().info("|- " + description.getName() + " -> " + des);
-                Broker.getLogger().info("   └─ Author: " + description.getAuthors());
+                Broker.getLogger().info("&7|- &f{} &7-> &e{}", description.getName(), des);
+                Broker.getLogger().info("   &7└─ Author: &a{}", description.getAuthors());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -1,6 +1,7 @@
 package me.xiaoying.turtle.api.core;
 
 import me.xiaoying.sqlfactory.SqlFactory;
+import me.xiaoying.turtle.api.broker.BrokerClient;
 import me.xiaoying.turtle.api.module.ModuleManager;
 import me.xiaoying.turtle.api.pluginmanager.PluginManager;
 import org.bukkit.plugin.Plugin;
@@ -15,6 +16,8 @@ public class TCore {
     private static PluginManager pluginManager;
 
     private static ModuleManager moduleManager;
+
+    private static BrokerClient brokerClient;
 
     public static Plugin getInstance() {
         return TCore.instance;
@@ -64,6 +67,17 @@ public class TCore {
             return;
 
         TCore.moduleManager = moduleManager;
+    }
+
+    public static BrokerClient getBrokerClient() {
+        return TCore.brokerClient;
+    }
+
+    public static void setBrokerClient(BrokerClient brokerClient) {
+        if (TCore.brokerClient != null)
+            return;
+
+        TCore.brokerClient = brokerClient;
     }
 
     public static ModuleManager getModuleManager() {

@@ -1,5 +1,7 @@
 package me.xiaoying.turtle.bukkit;
 
+import me.xiaoying.moebroker.api.BrokerAddress;
+import me.xiaoying.turtle.bukkit.broker.BClient;
 import me.xiaoying.turtle.api.core.TCore;
 import me.xiaoying.turtle.api.utils.ServerUtil;
 import me.xiaoying.turtle.bukkit.option.Option;
@@ -18,6 +20,10 @@ public class Turtle extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        ServerUtil.sendMessage("&6[*] &6尝试与服务器建立连接...");
+        TCore.setBrokerClient(new BClient(new BrokerAddress("0.0.0.0", 11200)));
+        TCore.getBrokerClient().run();
+
         ServerUtil.sendMessage("&6[*] &b初始化 &e" + this.getName() + " &b.");
 
         TCore.setInstance(this);
