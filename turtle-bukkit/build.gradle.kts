@@ -17,9 +17,10 @@ dependencies {
     implementation(project(":turtle-api"))
     implementation(project(":turtle-common"))
 
-    // AfyBroker
-    compileOnly("net.afyer.afybroker:afybroker-core:2.5")
-    compileOnly("net.afyer.afybroker:afybroker-client:2.5")
+    // moebroker
+    compileOnly("me.xiaoying.moebroker:broker-api:1.0.0")
+    compileOnly("me.xiaoying.moebroker:broker-client:1.0.0")
+
     // spigot-api
     compileOnly("org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT")
     // placeholder-api

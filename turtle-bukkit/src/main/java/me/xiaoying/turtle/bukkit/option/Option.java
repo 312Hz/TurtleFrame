@@ -1,12 +1,11 @@
 package me.xiaoying.turtle.bukkit.option;
 
-import com.alipay.remoting.exception.RemotingException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import me.xiaoying.turtle.api.core.TCore;
 import me.xiaoying.turtle.api.messsage.OptionClassificationRequestMessage;
 import me.xiaoying.turtle.api.messsage.OptionClassificationResponseMessage;
-import net.afyer.afybroker.client.Broker;
 
 import java.util.*;
 
@@ -69,19 +68,15 @@ public enum Option {
         Values.options.keySet().forEach(classification -> messages.add(new OptionClassificationRequestMessage(classification)));
 
         messages.forEach(message -> {
-            try {
-                OptionClassificationResponseMessage response = Broker.invokeSync(message);
-                response.getOptions().forEach(option -> {
-                    Option o = Option.getOption(option.getClassification(), option.getKey());
+            OptionClassificationResponseMessage response = TCore.getBrokerClient().invokeSync(message);
+            response.getOptions().forEach(option -> {
+                Option o = Option.getOption(option.getClassification(), option.getKey());
 
-                    if (o == null)
-                        return;
+                if (o == null)
+                    return;
 
-                    o.setValue(option.getValue());
-                });
-            } catch (RemotingException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+                o.setValue(option.getValue());
+            });
         });
     }
 
