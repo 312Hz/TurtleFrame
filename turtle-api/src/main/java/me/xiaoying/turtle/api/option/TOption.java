@@ -1,4 +1,4 @@
-package me.xiaoying.turtle.common.option;
+package me.xiaoying.turtle.api.option;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -12,7 +12,6 @@ import me.xiaoying.sqlfactory.sentence.Delete;
 import me.xiaoying.sqlfactory.sentence.Insert;
 import me.xiaoying.sqlfactory.sentence.Update;
 import me.xiaoying.turtle.api.core.TCore;
-import me.xiaoying.turtle.api.option.Option;
 
 import java.io.Serializable;
 

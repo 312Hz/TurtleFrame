@@ -2,7 +2,7 @@ package me.xiaoying.turtle.broker.module.consumable;
 
 import me.xiaoying.turtle.api.option.Option;
 import me.xiaoying.turtle.broker.module.Module;
-import me.xiaoying.turtle.common.option.TOption;
+import me.xiaoying.turtle.api.option.TOption;
 
 public class Consumable extends Module {
     @Override

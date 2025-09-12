@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
     implementation(project(":turtle-api"))
-    implementation(project(":turtle-common"))
 
     // logger
     compileOnly("me.xiaoying:logger:1.0.1")
