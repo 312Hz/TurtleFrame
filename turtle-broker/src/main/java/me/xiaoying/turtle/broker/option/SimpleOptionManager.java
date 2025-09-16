@@ -7,7 +7,7 @@ import me.xiaoying.sqlfactory.sentence.Update;
 import me.xiaoying.turtle.api.core.TCore;
 import me.xiaoying.turtle.api.option.Option;
 import me.xiaoying.turtle.api.option.OptionManager;
-import me.xiaoying.turtle.common.option.TOption;
+import me.xiaoying.turtle.api.option.TOption;
 
 import java.util.ArrayList;
 import java.util.HashMap;

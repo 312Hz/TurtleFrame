@@ -15,7 +15,6 @@ repositories {
 
 dependencies {
     implementation(project(":turtle-api"))
-    implementation(project(":turtle-common"))
 
     // moebroker
     compileOnly("me.xiaoying.moebroker:broker-api:1.0.0")
